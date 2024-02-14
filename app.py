@@ -24,7 +24,11 @@ def upload_to_drive(file_path, folder_id):
     
     media = MediaFileUpload(file_path, mimetype='application/pdf')
     
-    file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    file = service.files().create(
+    body=file_metadata,
+    media_body=media,
+    fields='id',
+    ).execute()
     print('File ID:', file.get('id'))
 
 @app.route('/')
@@ -38,7 +42,7 @@ def upload():
         file = request.files['file']
         if file.filename != '':
             file.save(os.path.join('uploads', file.filename))
-            folder_id = '1e62wkTIGOtBT5fmlbnaLIAomVQwjc73X'  # Replace with the actual folder ID of your "Edudocs" folder
+            folder_id = '1-7gwBXXRYNV4WTFGDhtZ8D-t3t5BQL3J'  
             upload_to_drive(os.path.join('uploads', file.filename), folder_id)
             return 'File uploaded successfully!'
     return redirect(url_for('index'))
